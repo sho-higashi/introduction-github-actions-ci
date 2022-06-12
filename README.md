@@ -75,10 +75,10 @@ First, let's add a workflow to lint our Markdown files in this repository.
 1. Update the workflow to remove all steps other than the "checkout" step.
 1. Add the following step to your workflow:
    ```yaml
-      - name: Run markdown lint
-        run: |
-          npm install remark-cli remark-preset-lint-consistent
-          npx remark . --use remark-preset-lint-consistent --frail
+   - name: Run markdown lint
+     run: |
+       npm install remark-cli remark-preset-lint-consistent
+       npx remark . --use remark-preset-lint-consistent --frail
    ```
    > We expect this to create a error build. We'll fix this in the next step.
 1. Click **Start commit**, and choose to make a new branch named `ci`.
@@ -125,7 +125,7 @@ If the checks don't appear or if the checks are stuck in progress, there's a few
 
 1. Update the code in the `ci` branch to get the test to pass. You need to look something like this:
    ```markdown
-   _underscore_
+   _ underscore _
    ```
 1. **Commit changes**.
 1. Wait about 20 seconds then refresh this page for the next step.
@@ -151,22 +151,24 @@ To upload artifacts to the artifact storage, we can use an action built by GitHu
 
 1. Edit your workflow file.
 1. Add a step to your `build` job that uses the `upload-artifacts` action.
+
    ```yaml
-     build:
-       runs-on: ubuntu-latest
-       steps:
-         - uses: actions/checkout@v2
+   build:
+     runs-on: ubuntu-latest
+     steps:
+       - uses: actions/checkout@v2
 
-         - name: Run markdown lint
-           run: |
-             npm install remark-cli remark-preset-lint-consistent
-             npx remark . --use remark-preset-lint-consistent --frail
+       - name: Run markdown lint
+         run: |
+           npm install remark-cli remark-preset-lint-consistent
+           npx remark . --use remark-preset-lint-consistent --frail
 
-         - uses: actions/upload-artifact@main
-           with:
-             name: remark-lint-report
-             path: public/
+       - uses: actions/upload-artifact@main
+         with:
+           name: remark-lint-report
+           path: public/
    ```
+
 1. Commit your change to this branch.
 1. Wait about 20 seconds then refresh this page for the next step.
 
